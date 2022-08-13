@@ -1,0 +1,18 @@
+{
+  "name": "discordbot-data",
+  "version": "1.0.0",
+  "description": "Save Discord Bot data to a file.",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "author": "yuyu",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc"
+  },
+  "dependencies": {
+    "typescript": "^4.7.4"
+  },
+  "devDependencies": {
+    "@types/node": "^18.7.2"
+  }
+}
