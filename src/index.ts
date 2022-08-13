@@ -6,6 +6,7 @@ type operatorString = '+' | '-' | '*' | '/' | '%' | '**' | '&&' | '||' | '??';
 const isDataType = string => ['global', 'guild', 'user', 'dm'].includes(string);
 
 export function getData(type: dataType, id: string | null, path: string[]): Object | null {
+
   if (!isDataType(type)) throw TypeError(`'${type}' is not a data type.`)
   if ((type != 'global' && id == null)) return null;
 
@@ -102,3 +103,26 @@ export function deleteData(type: dataType, id: string | null, path: string[]): v
   if (!fs.existsSync(dirname)) fs.mkdirSync(dirname);
   fs.writeFileSync(fileName, JSON.stringify(data));
 }
+
+class Version {
+  major: number;
+  minor: number;
+  patch: number;
+
+  constructor(name: string) {
+    let nums = name.split('.');
+    this.major = Number(nums[0]);
+    this.minor = Number(nums[1]);
+    this.patch = Number(nums[2]);
+  }
+
+  toString() {
+    return `${this.major}.${this.minor}.${this.patch}`;
+  }
+}
+
+const verFilePath = './data/version.txt';
+const newVer = new Version('1.0.0');
+const currentVer = fs.existsSync(verFilePath) ? new Version(fs.readFileSync(verFilePath).toString()) : newVer;
+
+fs.writeFileSync(verFilePath, newVer.toString())
