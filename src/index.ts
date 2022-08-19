@@ -104,7 +104,6 @@ export function setData(type: dataType, id: string | null, path: string[], value
   });
 
   if (useCache) setCache(type, id, data);
-  console.log(cache);
   if (!fs.existsSync('./data')) fs.mkdirSync('./data');
   if (!fs.existsSync(dirname)) fs.mkdirSync(dirname);
   fs.writeFile(fileName, JSON.stringify(data), () => {});
