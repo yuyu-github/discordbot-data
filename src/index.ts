@@ -35,7 +35,6 @@ const isDataType = string => ['global', 'guild', 'user', 'dm'].includes(string);
 export function getData(type: dataType, id: string | null, path: string[], useCache: boolean = true): Object | null {
   if (!isDataType(type)) throw TypeError(`'${type}' is not a data type.`)
   if ((type != 'global' && id == null)) return null;
-  console.log(cache);
 
   let dirname= './data' + (type != 'global' ? `/${type}` : '');
   let fileName = dirname + '/' + (type != 'global' ? id : 'global') + '.json';
