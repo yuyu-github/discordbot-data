@@ -1,6 +1,6 @@
 {
   "name": "discordbot-data",
-  "version": "1.2.5",
+  "version": "1.2.6",
   "description": "Save Discord Bot data to a file.",
   "main": "build/index.js",
   "types": "build/index.d.ts",
