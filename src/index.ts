@@ -55,6 +55,8 @@ export function getData(type: dataType, id: string | null, path: string[], useCa
       parent = parent[key];
     }
   });
+
+  if (useCache) value = JSON.parse(JSON.stringify(value));
   return value;
 }
 
