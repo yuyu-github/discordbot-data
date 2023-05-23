@@ -32,6 +32,8 @@ const setCache = (type: dataType, id: string | null, data: object) => type == 'g
 
 const isDataType = string => ['global', 'guild', 'user', 'dm'].includes(string);
 
+export function getData(type: 'global', id: null, path: string[], useCache?: boolean): Object | null;
+export function getData(type: dataType, id: string, path: string[], useCache?: boolean): Object | null;
 export function getData(type: dataType, id: string | null, path: string[], useCache: boolean = true): Object | null {
   if (!isDataType(type)) throw TypeError(`'${type}' is not a data type.`)
   if ((type != 'global' && id == null)) return null;
@@ -59,7 +61,8 @@ export function getData(type: dataType, id: string | null, path: string[], useCa
   if (useCache && value != undefined) value = JSON.parse(JSON.stringify(value));
   return value;
 }
-
+export function setData(type: 'global', id: null, path: string[], value: any, calc?: operatorString | ((old: Object | null, val: Object | null) => Object | null) | null, useCache?: boolean): void
+export function setData(type: dataType, id: string, path: string[], value: any, calc?: operatorString | ((old: Object | null, val: Object | null) => Object | null) | null, useCache?: boolean): void
 export function setData(type: dataType, id: string | null, path: string[], value: any, calc: operatorString | ((old: Object | null, val: Object | null) => Object | null) | null = null, useCache: boolean = true): void {
   if (!isDataType(type)) throw TypeError(`'${type}' is not a data type.`)
   if ((type != 'global' && id == null)) return;
@@ -111,6 +114,8 @@ export function setData(type: dataType, id: string | null, path: string[], value
   fs.writeFileSync(fileName, JSON.stringify(data));
 }
 
+export function deleteData(type: 'global', id: null, path: string[], useCache?: boolean): void
+export function deleteData(type: dataType, id: string, path: string[], useCache?: boolean): void
 export function deleteData(type: dataType, id: string | null, path: string[], useCache: boolean = true): void {
   if (!isDataType(type)) throw TypeError(`'${type}' is not a data type.`)
   if ((type != 'global' && id == null)) return;
