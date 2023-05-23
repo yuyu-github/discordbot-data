@@ -33,7 +33,7 @@ let debug = false;
 export const setDebug = (value: boolean) => debug = value;
 
 const isDataType = (str: string) => ['global', 'guild', 'user', 'dm'].includes(str);
-const getDirname = (type: dataType) => './' + debug ? 'data/.debug' : 'data' + (type != 'global' ? `/${type}` : '')
+const getDirname = (type: dataType) => './' + (debug ? 'data/.debug' : 'data') + (type != 'global' ? `/${type}` : '')
 
 export function getData<T = Object>(type: 'global', id: null, path: string[], useCache?: boolean): T | null;
 export function getData<T = Object>(type: dataType, id: string, path: string[], useCache?: boolean): T | null;
