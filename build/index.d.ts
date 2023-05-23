@@ -1,6 +1,10 @@
 type dataType = 'global' | 'guild' | 'user' | 'dm';
-type operatorString = '+' | '-' | '*' | '/' | '%' | '**' | '&&' | '||' | '??';
-
-export function getData(type: dataType, id: string | null, path: string[], useCache?: boolean): Object | null
-export function setData(type: dataType, id: string | null, path: string[], value: any, calc?: operatorString | ((old: Object | null, val: Object | null) => Object | null) | null, useCache?: boolean): void
-export function deleteData(type: dataType, id: string | null, path: string[], useCache?: boolean): void
+type operatorString = '+' | '-' | '*' | '/' | '%' | '**' | '&&' | '||' | '??' | 'push';
+export declare const setDebug: (value: boolean) => boolean;
+export declare function getData<T = Object>(type: 'global', id: null, path: string[], useCache?: boolean): T | null;
+export declare function getData<T = Object>(type: dataType, id: string, path: string[], useCache?: boolean): T | null;
+export declare function setData(type: 'global', id: null, path: string[], value: any, calc?: operatorString | ((old: Object | null, val: Object | null) => Object | null) | null, useCache?: boolean): void;
+export declare function setData(type: dataType, id: string, path: string[], value: any, calc?: operatorString | ((old: Object | null, val: Object | null) => Object | null) | null, useCache?: boolean): void;
+export declare function deleteData(type: 'global', id: null, path: string[], useCache?: boolean): void;
+export declare function deleteData(type: dataType, id: string, path: string[], useCache?: boolean): void;
+export {};

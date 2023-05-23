@@ -10,6 +10,7 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "incremental": true,
+    "declaration": true
   },
   "include": [
     "src/**/*"

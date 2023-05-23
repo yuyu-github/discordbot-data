@@ -30,7 +30,7 @@ const getCache = (type: dataType, id: string | null): object | null => (type == 
 const setCache = (type: dataType, id: string | null, data: object) => type == 'global' ? cache[type] = data : (cache[type] ??= {}, cache[type][id] = data)
 
 let debug = false;
-const setDebug = (value: boolean) => debug = value;
+export const setDebug = (value: boolean) => debug = value;
 
 const isDataType = (str: string) => ['global', 'guild', 'user', 'dm'].includes(str);
 const getDirname = (type: dataType) => './' + debug ? 'data/.debug' : 'data' + (type != 'global' ? `/${type}` : '')
