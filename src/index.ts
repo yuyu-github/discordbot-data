@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 
 type dataType = 'global' | 'guild' | 'user' | 'dm';
-type operatorString = '+' | '-' | '*' | '/' | '%' | '**' | '&&' | '||' | '??';
+type operatorString = '+' | '-' | '*' | '/' | '%' | '**' | '&&' | '||' | '??' | 'push';
 
 class Version {
   major: number;
@@ -84,6 +84,11 @@ export function setData(type: dataType, id: string | null, path: string[], value
           case '||': newValue ||= value; break;
           case '&&': newValue &&= value; break;
           case '??': newValue ??= value; break;
+          case 'push': {
+            newValue ??= [];
+            newValue.push(value);
+          }
+          break;
         }
         if (typeof newValue == 'number') {
           switch (calc) {
