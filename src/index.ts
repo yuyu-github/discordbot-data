@@ -64,9 +64,9 @@ export function getData<T = Object>(type: dataType, id: string | null, path: str
   return value as T | null;
 }
 
-export function setData(type: 'global', id: null, path: string[], value: any, calc?: operatorString | ((old: Object | null, val: Object | null) => Object | null) | null, useCache?: boolean): void
-export function setData(type: dataType, id: string, path: string[], value: any, calc?: operatorString | ((old: Object | null, val: Object | null) => Object | null) | null, useCache?: boolean): void
-export function setData(type: dataType, id: string | null, path: string[], value: any, calc: operatorString | ((old: Object | null, val: Object | null) => Object | null) | null = null, useCache: boolean = true): void {
+export function setData<V, T>(type: 'global', id: null, path: string[], value: V, calc?: operatorString | ((old: T | null, val: V) => T | null) | null, useCache?: boolean): void
+export function setData<V, T>(type: dataType, id: string, path: string[], value: V, calc?: operatorString | ((old: T | null, val: V) => T | null) | null, useCache?: boolean): void
+export function setData<V, T>(type: dataType, id: string | null, path: string[], value: V, calc: operatorString | ((old: T | null, val: V) => T | null) | null = null, useCache: boolean = true): void {
   if (!isDataType(type)) throw TypeError(`'${type}' is not a data type.`)
   if ((type != 'global' && id == null)) return;
 
@@ -113,7 +113,7 @@ export function setData(type: dataType, id: string | null, path: string[], value
             if (index >= 0) newValue.splice(index, 1);
           }
         }
-        if (typeof newValue == 'number') {
+        if (typeof newValue == 'number' && typeof value == 'number') {
           switch (calc) {
             case '-': newValue -= value; break;
             case '*': newValue *= value; break;
@@ -122,12 +122,12 @@ export function setData(type: dataType, id: string | null, path: string[], value
             case '**': newValue **= value; break;
           }
         }
-        if (typeof newValue == 'function') {
+        if (typeof value == 'function') {
           switch (calc) {
             case 'filter': newValue = (newValue ?? []).filter(value); break;
           }
         }
-        if (Array.isArray(newValue)) {
+        if (Array.isArray(value)) {
           switch (calc) {
             case 'concat': newValue = (newValue ?? []).concat(value); break;
           }
