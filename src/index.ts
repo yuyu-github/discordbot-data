@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 
 type dataType = 'global' | 'guild' | 'user' | 'dm';
-type operatorString = '+' | '-' | '*' | '/' | '%' | '**' | '&&' | '||' | '??' | 'push';
+type operatorString = '+' | '-' | '*' | '/' | '%' | '**' | '&&' | '||' | '??' | 'push' | 'unshift' | 'pop' | 'shift' | 'remove' | 'concat' | 'filter';
 
 class Version {
   major: number;
@@ -63,6 +63,7 @@ export function getData<T = Object>(type: dataType, id: string | null, path: str
   if (useCache && value != undefined) value = JSON.parse(JSON.stringify(value));
   return value as T | null;
 }
+
 export function setData(type: 'global', id: null, path: string[], value: any, calc?: operatorString | ((old: Object | null, val: Object | null) => Object | null) | null, useCache?: boolean): void
 export function setData(type: dataType, id: string, path: string[], value: any, calc?: operatorString | ((old: Object | null, val: Object | null) => Object | null) | null, useCache?: boolean): void
 export function setData(type: dataType, id: string | null, path: string[], value: any, calc: operatorString | ((old: Object | null, val: Object | null) => Object | null) | null = null, useCache: boolean = true): void {
@@ -91,6 +92,26 @@ export function setData(type: dataType, id: string | null, path: string[], value
             newValue.push(value);
           }
           break;
+          case 'unshift': {
+            newValue ??= [];
+            newValue.unshift(value);
+          }
+          break;
+          case 'pop': {
+            newValue ??= [];
+            newValue.pop();
+          }
+          break;
+          case 'shift': {
+            newValue ??= [];
+            newValue.shift();
+          }
+          break;
+          case 'remove': {
+            newValue ??= [];
+            let index = newValue.indexOf(value);
+            if (index >= 0) newValue.splice(index, 1);
+          }
         }
         if (typeof newValue == 'number') {
           switch (calc) {
@@ -99,6 +120,16 @@ export function setData(type: dataType, id: string | null, path: string[], value
             case '/': newValue /= value; break;
             case '%': newValue %= value; break;
             case '**': newValue **= value; break;
+          }
+        }
+        if (typeof newValue == 'function') {
+          switch (calc) {
+            case 'filter': newValue = (newValue ?? []).filter(value); break;
+          }
+        }
+        if (Array.isArray(newValue)) {
+          switch (calc) {
+            case 'concat': newValue = (newValue ?? []).concat(value); break;
           }
         }
 
